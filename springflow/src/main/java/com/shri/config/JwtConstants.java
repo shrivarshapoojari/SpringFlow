@@ -1,4 +1,4 @@
-package config;
+package com.shri.config;
 
 public class JwtConstants {
 

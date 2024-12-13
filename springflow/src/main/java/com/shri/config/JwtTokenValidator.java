@@ -1,4 +1,4 @@
-package config;
+package com.shri.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
