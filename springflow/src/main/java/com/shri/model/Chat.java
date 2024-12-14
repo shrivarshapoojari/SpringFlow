@@ -1,10 +1,15 @@
 package com.shri.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,6 +21,16 @@ public class Chat {
     private Long id;
 
 
+    private String name;
+
     @OneToOne
     private  Project project;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "chat",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Message> message;
+
+    @ManyToMany
+    private  List<User> users=new ArrayList<>();
 }
