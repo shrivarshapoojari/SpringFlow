@@ -2,9 +2,12 @@ package com.shri.controller;
 
 
 import com.shri.model.Chat;
+import com.shri.model.Invitation;
 import com.shri.model.Project;
 import com.shri.model.User;
+import com.shri.request.InvitationRequest;
 import com.shri.response.MessageResponse;
+import com.shri.service.InvitationService;
 import com.shri.service.ProjectService;
 import com.shri.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,10 @@ public class ProjectController
 
     @Autowired
     private ProjectService projectService;
+
+
+    @Autowired
+    private InvitationService invitationService;
 
     @Autowired
     private UserService userService;
@@ -114,8 +121,38 @@ public class ProjectController
     {
         User user=userService.findUserProfileByJwt(jwt);
         Chat chat=projectService.getChatByProjectId(projectId);
-        return new ResponseEntity<Chat>(chat,HttpStatus.OK);
+        return new ResponseEntity<>(chat,HttpStatus.OK);
     }
+
+    @PostMapping("/invite")
+    public  ResponseEntity<MessageResponse>inviteProject(
+            @RequestHeader("Authorization") String jwt,
+            @RequestBody InvitationRequest invitationRequest
+
+            ) throws  Exception
+    {
+        User user=userService.findUserProfileByJwt(jwt);
+
+        invitationService.sendInvitation(invitationRequest.getEmail(),invitationRequest.getProjectId());
+        MessageResponse res=new MessageResponse("Invitation Sent Sucesss");
+        return  new ResponseEntity<>(res,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/accept/{token}")
+    public  ResponseEntity<Invitation>acceptInvite(
+            @RequestParam String token,
+            @RequestHeader("Authorization") String jwt,
+
+
+) throws  Exception
+{
+       User user=userService.findUserProfileByJwt(jwt);
+       Invitation invitation=invitationService.acceptInvitation(token, user.getId());
+       projectService.addUserToProject(invitation.getProjectId(),user.getId());
+       return new ResponseEntity<>(invitation,HttpStatus.ACCEPTED);
+
+}
 }
 
 
