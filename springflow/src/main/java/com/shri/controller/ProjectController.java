@@ -1,8 +1,10 @@
 package com.shri.controller;
 
 
+import com.shri.model.Chat;
 import com.shri.model.Project;
 import com.shri.model.User;
+import com.shri.response.MessageResponse;
 import com.shri.service.ProjectService;
 import com.shri.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +79,46 @@ public class ProjectController
              return new ResponseEntity<>(updatedProject,HttpStatus.OK);
     }
 
+    @DeleteMapping("/{projectId}")
+    public  ResponseEntity<MessageResponse>deleteProject(
+
+            @PathVariable Long projectId,
+            @RequestHeader("Authorization") String jwt
+
+    )throws  Exception
+    {
+        User user=userService.findUserProfileByJwt(jwt);
+        projectService.deleteProject(projectId,user.getId());
+        MessageResponse res=new MessageResponse("Project Deleted");
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/search")
+    public  ResponseEntity<List<Project>> searchProjects(
+            @RequestParam(required = false) String keyword,
+            @RequestHeader("Authorization") String jwt
+    ) throws  Exception
+    {
+        User user=userService.findUserProfileByJwt(jwt);
+        List<Project> projects=projectService.searchProject(keyword,user);
+        return new ResponseEntity<>(projects,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{projectId}/chat")
+    public  ResponseEntity<Chat> getChatByProjectId(
+            @PathVariable Long projectId,
+            @RequestHeader("Authorization") String jwt
+    ) throws  Exception
+    {
+        User user=userService.findUserProfileByJwt(jwt);
+        Chat chat=projectService.getChatByProjectId(projectId);
+        return new ResponseEntity<Chat>(chat,HttpStatus.OK);
+    }
 }
+
+
+
+
+
