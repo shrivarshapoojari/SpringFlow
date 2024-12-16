@@ -1,6 +1,4 @@
 package com.shri.controller;
-
-
 import com.shri.model.Chat;
 import com.shri.model.Invitation;
 import com.shri.model.Project;
@@ -142,7 +140,7 @@ public class ProjectController
     @GetMapping("/accept/{token}")
     public  ResponseEntity<Invitation>acceptInvite(
             @RequestParam String token,
-            @RequestHeader("Authorization") String jwt,
+            @RequestHeader("Authorization") String jwt
 
 
 ) throws  Exception
