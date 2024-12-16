@@ -77,3 +77,6 @@ node_modules/
 
 # Test Reports
 test-output/
+
+
+springflow/src/main/resources/application.properties
