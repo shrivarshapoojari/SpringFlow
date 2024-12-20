@@ -9,6 +9,7 @@ import com.shri.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -73,4 +74,31 @@ public class IssueController {
         return  new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @PutMapping("/{issueId}/assignee/{userId}")
+    public ResponseEntity<Issue> assignUserToIssue(
+            @PathVariable Long issueId,
+            @PathVariable Long userId
+    ) throws  Exception
+    {
+        Issue issue=issueService.addUserToIssue(issueId,userId);
+        return new ResponseEntity<>(issue,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/assignee/{assigneeId}")
+    public ResponseEntity<List<Issue>> getIssueByAssigneeid(@PathVariable Long assigneeId) throws Exception
+    {
+        List<Issue> issues=issueService.getIssuesByAssigneeId(assigneeId);
+        return new ResponseEntity<>(issues,HttpStatus.OK);
+    }
+
+    @PutMapping("/{issueId}/status/{status}")
+            public ResponseEntity<Issue> updateIssue(
+            @PathVariable String status,
+            @PathVariable Long issueId
+    ) throws  Exception
+    {
+         Issue issue=issueService.updateStatus(issueId,status);
+         return new ResponseEntity<>(issue,HttpStatus.OK);
+    }
 }
