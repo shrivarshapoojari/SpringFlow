@@ -24,7 +24,7 @@ public class MessageServiceImpl  implements  MessageService{
     @Autowired
     private MessageRepository messageRepository;
     @Override
-    public Message sendMessage(Long senderId, Long projectId, String content) throws  Exception {
+    public Message sendMessage(Long senderId, Long projectId, String content) throws Exception {
 
 
 
