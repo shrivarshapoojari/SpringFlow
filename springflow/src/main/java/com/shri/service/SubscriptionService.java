@@ -2,16 +2,16 @@ package com.shri.service;
 
 
 import com.shri.model.PlanType;
-import com.shri.model.Subsription;
+import com.shri.model.Subscription;
 import com.shri.model.User;
 
 public interface SubscriptionService {
 
-    Subsription createSubscription(User user);
+    Subscription createSubscription(User user);
 
-    Subsription getUsersSubscription(Long userId) throws  Exception;
+    Subscription getUsersSubscription(Long userId) throws  Exception;
 
-    Subsription upgradeSubscription(Long userId, PlanType planType);
+    Subscription upgradeSubscription(Long userId, PlanType planType) throws Exception;
 
-    boolean isValid(Subsription subsription);
+    boolean isValid(Subscription subsription);
 }

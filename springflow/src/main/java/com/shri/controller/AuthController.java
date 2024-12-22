@@ -6,6 +6,7 @@ import com.shri.model.User;
 import com.shri.repository.UserRepository;
 import com.shri.request.LoginRequest;
 import com.shri.response.AuthResponse;
+import com.shri.service.SubscriptionService;
 import com.shri.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,8 @@ public class AuthController {
    private    PasswordEncoder passwordEncoder;
 
     @Autowired
+    private SubscriptionService subscriptionService;
+    @Autowired
     private UserDetailsImpl userDetails;
 
     @PostMapping("/signup")
@@ -53,6 +56,7 @@ public class AuthController {
         String jwt= JwtProvider.generateToken(authentication);
         AuthResponse res=new AuthResponse();
         res.setMessage("SignUp success");
+        subscriptionService.createSubscription(savedUser);
         res.setJwt(jwt);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
