@@ -1,5 +1,6 @@
 package com.shri.service;
 
+import com.shri.model.PlanType;
 import com.shri.response.StripeResponse;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -16,12 +17,12 @@ public class StripeServiceImpl implements  StripeService {
 
 
     @Override
-    public StripeResponse checkout(Long amount, String plan, String currency) {
+    public StripeResponse checkout(Long amount, PlanType plan, String currency, Long userId) {
         Stripe.apiKey = secretKey;
 
         SessionCreateParams.LineItem.PriceData.ProductData productData =
                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                        .setName(plan)
+                        .setName(plan.name())
                         .build();
 
 
@@ -41,12 +42,14 @@ public class StripeServiceImpl implements  StripeService {
                         .build();
 
 
+
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
                         .setSuccessUrl("http://localhost:8080/success")
                         .setCancelUrl("http://localhost:8080/cancel")
                         .addLineItem(lineItem)
+                        .putMetadata("userId",userId.toString())
                         .build();
 
         // Create new session
