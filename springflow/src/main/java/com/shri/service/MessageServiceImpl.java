@@ -28,7 +28,7 @@ public class MessageServiceImpl  implements  MessageService{
 
 
 
-        Optional sender=userRepository.findById(senderId);
+        Optional<User> sender=userRepository.findById(senderId);
 
 
         if(sender.isEmpty())
@@ -37,7 +37,7 @@ public class MessageServiceImpl  implements  MessageService{
 
         Message message=new Message();
         message.setContent(content);
-        message.setSender(sender);
+        message.setSender(sender.get());
         message.setCreatedAt(LocalDateTime.now());
         message.setChat(chat);
 

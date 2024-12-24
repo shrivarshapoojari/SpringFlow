@@ -26,6 +26,6 @@ public class Message {
 
 
     @ManyToOne
-    private Optional sender;
+    private User sender;
 
 }
