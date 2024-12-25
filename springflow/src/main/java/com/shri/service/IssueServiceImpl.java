@@ -68,8 +68,16 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> getIssuesByAssigneeId(Long assigneeId) throws Exception {
-        return List.of();
+        // Fetch the user by ID
+        User user = userService.findUserById(assigneeId);
+
+        if (user == null) {
+            throw new Exception("User does not exist with the given ID: " + assigneeId);
+        }
+
+        return user.getAssignedIssues();
     }
+
 
     @Override
     public List<Issue> searchIssue(String title, String status, String priority, Long AssigneeId) throws Exception {

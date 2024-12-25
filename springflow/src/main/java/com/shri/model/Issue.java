@@ -4,6 +4,7 @@ package com.shri.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,12 +26,14 @@ public class Issue {
     private LocalDate dueDate;
     private List<String> tags=new ArrayList<>();
 
-
+     @JsonIgnore
     @ManyToOne
+     @ToString.Exclude
     private User assignee;
 
     @JsonIgnore
     @ManyToOne
+    @ToString.Exclude
     private  Project project;
 
     @JsonIgnore

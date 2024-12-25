@@ -34,12 +34,12 @@ public class IssueController {
 
     }
 
-    @GetMapping("/project/{projectid}")
+    @GetMapping("/project/{projectID}")
     public ResponseEntity<List<Issue>> getIssuesByProjectId(
-            @PathVariable Long projectId
+            @PathVariable Long projectID
     ) throws  Exception
     {
-        List<Issue>issues=issueService.getIssueByProjectId(projectId);
+        List<Issue>issues=issueService.getIssueByProjectId(projectID);
         return  new ResponseEntity<>(issues,HttpStatus.OK);
     }
 
@@ -89,6 +89,7 @@ public class IssueController {
     public ResponseEntity<List<Issue>> getIssueByAssigneeid(@PathVariable Long assigneeId) throws Exception
     {
         List<Issue> issues=issueService.getIssuesByAssigneeId(assigneeId);
+        System.out.println(issues);
         return new ResponseEntity<>(issues,HttpStatus.OK);
     }
 
