@@ -106,6 +106,13 @@ public class ProjectController
     ) throws  Exception
     {
         User user=userService.findUserProfileByJwt(jwt);
+        System.out.println("___________________________________________");
+        System.out.println("___________________________________________");
+        System.out.println("___________________________________________");
+        System.out.println(keyword);
+        System.out.println("___________________________________________");
+        System.out.println("___________________________________________");
+        System.out.println("___________________________________________");
         List<Project> projects=projectService.searchProject(keyword,user);
         return new ResponseEntity<>(projects,HttpStatus.OK);
 
