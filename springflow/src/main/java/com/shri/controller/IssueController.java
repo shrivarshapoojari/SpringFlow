@@ -64,7 +64,7 @@ public class IssueController {
 
     public  ResponseEntity<MessageResponse> deleteIssue(
             @PathVariable Long issueId,
-            @RequestHeader String jwt
+            @RequestHeader("Authorization") String jwt
     ) throws  Exception
     {
         User user=userService.findUserProfileByJwt(jwt);
